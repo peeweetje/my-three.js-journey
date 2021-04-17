@@ -27,16 +27,16 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 
-let time = Date.now();
-
 // Animation
+const clock = new THREE.Clock();
+
 const frameLoop = () => {
   // The rotation speed will be the same on every screen and every computers regardless of the frame rate.
-  const currentTime = Date.now();
-  const deltaTime = currentTime - time;
-  time = currentTime;
+  const elapsedTime = clock.getElapsedTime();
   // update the cube
-  mesh.rotation.y += -0.001 * deltaTime;
+  camera.position.x = Math.cos(elapsedTime);
+  camera.position.y = Math.sin(elapsedTime);
+  camera.lookAt(mesh.position);
 
   renderer.render(scene, camera);
   window.requestAnimationFrame(frameLoop);
