@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import gsap from 'gsap';
 import './style.css';
 
 // Scene
@@ -28,15 +29,17 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height);
 
 // Animation
-const clock = new THREE.Clock();
+// const clock = new THREE.Clock();
+
+gsap.to(mesh.position, { duration: 1, delay: 1, x: 2 });
 
 const frameLoop = () => {
   // The rotation speed will be the same on every screen and every computers regardless of the frame rate.
-  const elapsedTime = clock.getElapsedTime();
-  // update the cube
-  camera.position.x = Math.cos(elapsedTime);
-  camera.position.y = Math.sin(elapsedTime);
-  camera.lookAt(mesh.position);
+  // const elapsedTime = clock.getElapsedTime();
+  // // update the cube
+  // camera.position.x = Math.cos(elapsedTime);
+  // camera.position.y = Math.sin(elapsedTime);
+  // camera.lookAt(mesh.position);
 
   renderer.render(scene, camera);
   window.requestAnimationFrame(frameLoop);
