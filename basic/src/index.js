@@ -21,7 +21,17 @@ const mesh = new THREE.Mesh(
 scene.add(mesh);
 
 // Camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
+// const camera = new THREE.PerspectiveCamera(75,sizes.width / sizes.height,0.1,100);
+// the cube looks flat => rendered in a square area into a rectangle canvas => that's why we need to use the canvas ratio(width by height)
+const aspectRatio = sizes.width / sizes.height;
+const camera = new THREE.OrthographicCamera(
+  -1 * aspectRatio,
+  1 * aspectRatio,
+  1,
+  -1,
+  0.1,
+  100
+);
 camera.position.x = 2;
 camera.position.y = 2;
 camera.position.z = 2;
