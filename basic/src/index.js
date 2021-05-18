@@ -60,20 +60,14 @@ const scene = new THREE.Scene();
 
 // Object
 // Create an empty BufferGeometry
-const geometry = new THREE.BufferGeometry(1, 1, 1, 4, 4, 4);
+const geometry = new THREE.BufferGeometry();
 
-// Create a Float32Array containing the vertices position (3 by 3)
-const positionsArray = new Float32Array([
-  0,
-  0,
-  0, // First vertex
-  0,
-  1,
-  0, // Second vertex
-  1,
-  0,
-  0, // Third vertex
-]);
+// Create 50 triangles (450 values)
+const count = 50;
+const positionsArray = new Float32Array(count * 3 * 3);
+for (let i = 0; i < count * 3 * 3; i++) {
+  positionsArray[i] = (Math.random() - 0.5) * 4;
+}
 
 // Create the attribute and name it 'position'
 const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3);
