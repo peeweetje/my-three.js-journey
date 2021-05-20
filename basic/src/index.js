@@ -1,6 +1,26 @@
 import './style.css';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import * as dat from 'dat.gui';
+import gsap from 'gsap';
+
+/**
+ * Debug
+ */
+const gui = new dat.GUI({ width: 400 });
+
+const parameters = {
+  color: 0xff0000,
+  spin: () => {
+    gsap.to(mesh.rotation, { duration: 1, y: mesh.rotation.y + Math.PI * 2 });
+  },
+};
+
+gui.addColor(parameters, 'color').onChange(() => {
+  material.color.set(parameters.color);
+});
+
+gui.add(parameters, 'spin');
 
 // Cursor
 const cursor = {
@@ -59,27 +79,20 @@ window.addEventListener('dblclick', () => {
 const scene = new THREE.Scene();
 
 // Object
-// Create an empty BufferGeometry
-const geometry = new THREE.BufferGeometry();
-
-// Create 50 triangles (450 values)
-const count = 50;
-const positionsArray = new Float32Array(count * 3 * 3);
-for (let i = 0; i < count * 3 * 3; i++) {
-  positionsArray[i] = (Math.random() - 0.5) * 4;
-}
-
-// Create the attribute and name it 'position'
-const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3);
-geometry.setAttribute('position', positionsAttribute);
+const geometry = new THREE.BoxGeometry(1, 1, 1);
 
 const material = new THREE.MeshBasicMaterial({
-  color: 0xff0000,
+  color: parameters.color,
   wireframe: true,
 });
 
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
+
+// debug
+gui.add(mesh.position, 'y').min(-3).max(3).step(0.01).name('elevation');
+gui.add(mesh, 'visible');
+gui.add(material, 'wireframe');
 
 // Camera
 const camera = new THREE.PerspectiveCamera(
