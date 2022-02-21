@@ -33,6 +33,14 @@ window.addEventListener('mousemove', (event) => {
   cursor.y = -(event.clientY / sizes.height - 0.5);
 });
 
+//textures
+const image = new Image();
+const texture = new THREE.Texture(image);
+image.addEventListener('load', () => {
+  texture.needsUpdate = true;
+});
+image.src = '/textures/door/color.jpg';
+
 // Canvas
 const canvas = document.querySelector('canvas.webgl');
 
@@ -81,10 +89,7 @@ const scene = new THREE.Scene();
 // Object
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 
-const material = new THREE.MeshBasicMaterial({
-  color: parameters.color,
-  wireframe: true,
-});
+const material = new THREE.MeshBasicMaterial({ map: texture });
 
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
