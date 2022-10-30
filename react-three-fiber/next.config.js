@@ -2,7 +2,6 @@
 require('next-transpile-modules')(['three']);
 
 const nextConfig = {
-  withTM: true,
   reactStrictMode: true,
   swcMinify: true,
 };
